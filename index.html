@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html>
+<HEAD>	 
+ 	 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+ </HEAD>
+
+
+<body>
+
+
+
+<p><b>Ingrese dia de activación de servicio actual. Debe ser entre 1 y 30</b></p>
+<input type="number" min="1" max="30" id="ingreso_servicios_vigentes" value=" ">
+
+<p><b>Ingrese dia de activación de nuevos servicios. Debe ser entre 1 y 30</b></p>
+<input type="number" min="1" max="30" id="ingreso_servicios_nuevos" value=" ">
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<p><b>Ingrese plan actual</b></p>
+<select id="Plan_actual">
+   <option id="tv_hd" value="2">Tv analogo</option> 
+   <option id="tv_analogo" value="3">Tv hd</option>
+   <option value="4">Tv full</option>   
+   <option id="fono" value="5">Fono</option>
+   <option id="mega200" value="6">Mega 200</option> 
+   <option id="mega500" value="7">Mega 500</option> 
+   <option id="mega600"value="8">Mega 600</option> 
+ </select>
+
+<br/>
+<br/>
+
+<p><b>Ingresar Televisión (si no aplica dejar en "No")  </b></p>
+<select id="Nuevos_productos_tv">
+   <option value="1">No</option>
+   <option value="2">Tv analogo</option> 
+   <option value="3">Tv hd</option> 
+   <option value="4">Tv full</option>
+ </select>
+ 
+<br/>
+<br/>
+ 
+<p><b>Ingresar internet (si no aplica dejar en "No")  </b></p>
+<select id="Nuevos_productos_internet">
+   <option value="1">No</option>
+   <option value="6">Mega 200</option> 
+   <option value="7">Mega 500</option> 
+   <option value="8">Mega 600</option>   
+ </select>
+
+<br/>
+<br/>
+
+
+<p><b>Ingresar Fono (si no aplica dejar en "No")  </b></p>
+<select id="Nuevos_productos_fono">
+   <option value="1">No</option> 
+   <option value="5">Fono</option>   
+ </select>   
+
+<br/>
+<br/>
+
+<p><b>Ingrese descuentos de bala de plata</b></p>
+<input type="number" id="bala_de_plata" value="0"></p>
+
+
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<button onclick="boton()">Calcular</button>
+<!--
+<p>array de vigentes</p> 
+<p><span id="vig"></span></p>
+<p>numero de elementos array de vigentes</p>
+<p><span id="vig_len"></span></p>
+
+<p>array de nuevos</p>
+<p><span id="nuev"></span></p>
+<p>numero de elementos array de nuevos</p>
+<p><span id="nuev_len"></span></p>
+
+<p>array de los elementos que hicieron match</p>
+<p><span id="match"></span></p>
+<p>numero de elementos del match</p>
+<p><span id="match_len"></span></p>
+
+<p>dias prop</p>
+<p><span id="dias_prop"></span></p>
+
+
+<p>array descuento</p>
+<p><span id="array_descuento"></span></p>
+
+
+<p>descuento renta normal</p>
+<p><span id="desc_de_renta_normal"></span></p>
+
+<p>numeral codigo</p>
+<p><span id="numeral_codigo"></span></p>
+
+<p>letra de vigente</p>
+<p><span id="letra_vig"></span></p>
+
+<p>letra tv</p>
+<p><span id="letra_tv"></span></p>
+                           
+
+<p>letra inet</p>
+<p><span id="letra_inet"></span></p>
+
+
+<p>letra fono</p>
+<p><span id="letra_fono"></span></p>
+
+
+<p>precio extraido actual</p>
+<p><span id="precio_actual"></span></p>
+						   
+<p>precio extraido tv</p>
+<p><span id="precio_tv"></span></p>
+
+<p>precio extraido inet</p>
+<p><span id="precio_inet"></span></p>
+
+<p>precio extraido fono</p>
+<p><span id="precio_fono"></span></p>	
+
+
+
+
+<p>nombre extraido actual</p>
+<p><span id="nombre_vigente"></span></p>
+						   
+<p>nombre extraido tv</p>
+<p><span id="nombre_tv"></span></p>
+
+<p>nombre extraido inet</p>
+<p><span id="nombre_inet"></span></p>
+
+<p>nombre extraido fono</p>
+<p><span id="nombre_fono"></span></p>-->
+
+	
+
+
+
+<p><span id="plan_"></span></p>				   
+						   
+<script>
+
+// crea un array
+var dias = [];
+for (var i = 1; i <= 30; i++) {
+    dias.push(i);
+}
+
+
+//filtro para crear nuevos arrays
+
+function servicios_vigentes(filtro) {
+  return filtro <= document.getElementById("ingreso_servicios_vigentes").value;
+}
+
+
+
+
+
+
+function servicios_nuevos(filtro) {
+  return filtro >= document.getElementById("ingreso_servicios_nuevos").value;
+}
+
+
+
+//encapsulacion de los dos nuevos arrays
+/*
+var vigentes = dias.filter(servicios_vigentes);
+var nuevos = dias.filter(servicios_nuevos);
+*/
+
+
+
+
+
+
+
+
+function getMatch(a, b) {
+    var matches = [];
+
+    for ( var i = 0; i < a.length; i++ ) {
+        for ( var e = 0; e < b.length; e++ ) {
+            if ( a[i] === b[e] ) matches.push( a[i] );
+        }
+    }
+    return matches;
+}
+
+
+
+function dias_prop(c_match_len, vig_len, nuev_len){
+
+     if (c_match_len == 0){
+	 
+	     return vig_len + nuev_len;
+	 
+	 }else{
+	 
+	 
+	     return c_match_len ;
+	 
+	 }
+     
+}
+
+//array concatenado
+function crea_array(){
+
+var seleccionado_1 = document.getElementById("Plan_actual");
+	var plan_actual = seleccionado_1.options[seleccionado_1.selectedIndex].value;
+
+
+    // productos nuevos
+	var serv_nuev_tv = document.getElementById("Nuevos_productos_tv");
+	var serv_nuev_tv_numeral = serv_nuev_tv.options[serv_nuev_tv.selectedIndex].value;
+	
+	var serv_nuev_inet = document.getElementById("Nuevos_productos_internet");
+	var serv_nuev_inet_numeral = serv_nuev_inet.options[serv_nuev_inet.selectedIndex].value;
+	
+	var serv_nuev_fono = document.getElementById("Nuevos_productos_fono");
+	var serv_nuev_fono_numeral = serv_nuev_fono.options[serv_nuev_fono.selectedIndex].value;
+  
+
+
+
+
+
+
+ var array_desc =[plan_actual+serv_nuev_tv_numeral+serv_nuev_inet_numeral+serv_nuev_fono_numeral]
+
+  return array_desc;
+
+
+
+}
+
+//array no concatenado
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function numeral_array_codigo(creacion_array){
+
+
+   if(creacion_array==2361||creacion_array==3161||creacion_array==6311){
+   
+     return 3;
+   
+   }else if(creacion_array==2371||creacion_array==6371||creacion_array==3171||creacion_array==7311){
+   
+     return 7;
+
+   }else if(creacion_array==2481||creacion_array==3481||creacion_array==4181||creacion_array==8411||creacion_array==6481||creacion_array==7481){
+   
+     return 13; 
+   
+   }else if(creacion_array==2315||creacion_array==3115||creacion_array==5311){
+   
+     return 16;
+   
+   }else if(creacion_array==2415||creacion_array==3415||creacion_array==4115||creacion_array==5411){
+   
+     return 20;
+   
+   }else if(creacion_array==6115||creacion_array==5611){
+   
+     return 22;
+   
+   }else if(creacion_array==6175||creacion_array==5171||creacion_array==7115){
+   
+     return 25;
+   
+   }else if(creacion_array==6185||creacion_array==7185||creacion_array==5181||creacion_array==8115){
+   
+     return 29;
+   
+   }else if(creacion_array==2365||creacion_array==3165||creacion_array==6315||creacion_array==5315||creacion_array==5361){
+   
+     return 34;
+   
+   }else if(creacion_array==2375||creacion_array==6375||creacion_array==3175||creacion_array==7315||creacion_array==5371){
+   
+     return 39;
+   
+   }else if(creacion_array==2485||creacion_array==3485||creacion_array==6485||creacion_array==7485||creacion_array==8415||creacion_array==4185||creacion_array==5481){
+   
+     return 46;
+   
+   }else{
+   
+      return "sin empaquetamiento registrado"
+   
+   }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function aplica_desc(num_codigo){
+
+     var cod_array = num_codigo;
+	 
+	 if(cod_array==3||cod_array==7||cod_array==20){
+    
+	return 2990; 
+
+    }else if(cod_array ==13||cod_array==22){
+
+    return 5990;
+
+    }else if(cod_array ==25){
+	
+	return 6990;
+	
+	}else if(cod_array ==16){
+	
+	return 7990;
+	
+	}else if(cod_array ==29){
+	
+	return 9990;
+	
+	}else if(cod_array ==34){
+	
+	return 12980;
+	
+	}else if(cod_array ==39){
+	
+	return 13980;
+	
+	}else if(cod_array ==46){
+	
+	return 15980;
+	
+	}else{
+	
+	return 0;
+	
+	}
+
+}
+
+
+   
+  
+
+  function dict(a){
+
+	
+	     if (a==1){
+		  return "a";
+		 }else if(a==2){
+		  return "b"; 
+		 }else if(a==3){
+		  return "c";
+		 }else if(a==4){
+		  return "d";
+		 }else if(a==5){
+		  return "e"; 
+		 }else if(a==6){
+		  return "f";
+		 }else if(a==7){
+		  return "g";
+		 }else if(a==8){
+		  return "h";
+		 }
+	  }
+
+  
+	
+	
+	
+	
+	
+function extrae_precios(indicador){
+
+    var precios = [{"a":0,"b":17990,"c":21990,"d":23990,"e":17990,"f":20990,"g":25990,"h":33990}];
+    
+	 var precios_extraidos = [];
+   
+      for (var i=0; i < precios.length ; ++i) {
+
+        // extract value from property
+        precios_extraidos.push(precios[i][indicador]);
+		
+        }
+		
+    return precios_extraidos;
+
+}	
+	
+	
+function extrae_Nombres_prod(indicador){
+
+    var nombres = [{"a":"No aplica","b":"Tv analogo","c":"Tv hd","d":"Tv full","e":"fono","f":"Mega 200","g":"Mega 500","h":"Mega 600"}];
+    
+	 var nombres_extraidos = [];
+   
+      for (var i=0; i < nombres.length ; ++i) {
+
+        // extract value from property
+        nombres_extraidos.push(nombres[i][indicador]);
+		
+        }
+		
+    return nombres_extraidos;
+
+}		
+	
+	
+//   var precios = [{"a":0,"b":17990,"c":21990,"d":23990,"e":17990,"f":20990,"g":25990,"h":33990}];
+
+//    var precios_extraidos = [];
+	
+//	for (var i=0; i < precios.length ; ++i) {
+
+        // extract value from property
+//        precios_extraidos.push(precios[i][indicador]);
+//    }
+//    return precios_extraidos;
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+function planes(dias_prop_,array_concatenado,desc_renta_normal,nombre_tv,nombre_inet,nombre_fono,precio_tv,precio_inet,precio_fono,precio_servicio_actual){
+     
+	
+    var dia_inicio = document.getElementById("ingreso_servicios_vigentes").value;
+	var dia_finalizacion = document.getElementById("ingreso_servicios_nuevos").value;
+	 
+	 // productos vigentes
+    var seleccionado_1 = document.getElementById("Plan_actual");
+	var plan_actual = seleccionado_1.options[seleccionado_1.selectedIndex].value;
+
+
+    // productos nuevos
+	var serv_nuev_tv = document.getElementById("Nuevos_productos_tv");
+	var serv_nuev_tv_numeral = serv_nuev_tv.options[serv_nuev_tv.selectedIndex].value;
+	
+	var serv_nuev_inet = document.getElementById("Nuevos_productos_internet");
+	var serv_nuev_inet_numeral = serv_nuev_inet.options[serv_nuev_inet.selectedIndex].value;
+	
+	var serv_nuev_fono = document.getElementById("Nuevos_productos_fono");
+	var serv_nuev_fono_numeral = serv_nuev_fono.options[serv_nuev_fono.selectedIndex].value;
+	
+	//valores de planes
+	
+	var tv_analogo_valor = 17990;
+	var tv_hd_valor = 21990;
+	var tv_full_valor = 23990;
+	
+	var mega_200_valor = 20990;
+	var mega_500_valor = 25990;
+	var mega_600_valor = 33990;
+	
+	var fono_valor = 17990;
+	
+	//valores de promociones
+	
+	desc_bala_de_plata = document.getElementById("bala_de_plata").value;
+	
+	
+	//recordar asignar recuadro de promociones para hacer la resta automatica
+	
+	
+	// dias proporcionales
+	
+	var numero_propor_a = parseInt(dias_prop_)
+	var numero_propor = numero_propor_a - 1
+	//parseint valores 
+	
+	
+	precio_actual_int = parseInt(precio_servicio_actual);
+	precio_tv_int = parseInt(precio_tv);
+	precio_inet_int = parseInt(precio_inet);
+	precio_fono_int = parseInt(precio_fono);
+	
+	
+	desc_renta_normal_int = parseInt(desc_renta_normal);
+	desc_bala_de_plata_int = parseInt(desc_bala_de_plata);
+	numero_propor_int = parseInt(numero_propor);
+	
+	
+	resta_servicio_pagado = precio_servicio_actual;
+	
+	
+	
+	
+	proporcionales_actual = ((precio_actual_int/30)*numero_propor)
+	
+	proporcionales_tv = ((precio_tv_int/30)*numero_propor)
+	proporcionales_inet = ((precio_inet_int/30)*numero_propor)
+	proporcionales_fono = ((precio_fono_int/30)*numero_propor)
+	
+	suma_prop_nuevos = proporcionales_tv+proporcionales_inet+proporcionales_fono
+	
+	proporcionales_desc_renta_normal = ((desc_renta_normal_int/30)*numero_propor)
+	
+
+	
+	valor_proporcionales_total = (proporcionales_tv+proporcionales_inet+proporcionales_fono+proporcionales_actual);
+	
+	suma_serv_nuevos = precio_tv_int+precio_inet_int+precio_fono_int
+	
+	
+	
+	
+	costo_total_sin_upgrade = ((suma_serv_nuevos+precio_actual_int)-desc_renta_normal_int) + (((suma_prop_nuevos+proporcionales_actual)-proporcionales_desc_renta_normal)-proporcionales_actual)  - desc_bala_de_plata_int
+
+    costo_total_upgrade =   (suma_serv_nuevos-desc_renta_normal)+((suma_prop_nuevos-proporcionales_desc_renta_normal)- proporcionales_actual) -desc_bala_de_plata_int                                   
+
+	
+	  if(plan_actual == serv_nuev_tv_numeral ||plan_actual == serv_nuev_inet_numeral || plan_actual == serv_nuev_fono_numeral ){
+	  
+	      return "Uno de los productos seleccionados son los mismos"
+	  
+	  }else if(serv_nuev_tv_numeral == 1 && serv_nuev_inet_numeral == 1 && serv_nuev_fono_numeral == 1){
+	  
+	      return "No se ha seleccionado un nuevo servicio" 
+
+	  }else if(isNaN(desc_bala_de_plata_int)){
+	  
+	      return "Porfavor, ingrese bala de plata. Si no aplica ingresar el numero 0"		  
+		  
+	  
+
+		  
+	  }else if(isNaN(dia_inicio)||isNaN(dia_finalizacion)||dia_inicio < 1 ||dia_inicio >30 ||dia_finalizacion < 1 ||dia_finalizacion > 30 ){
+	  
+	      return "Para el dia de activación de servicios vigentes y nuevos se debe ingresar un dia entre 1 y 30"		  
+		  
+	  
+	  }else if(array_concatenado == 3161||array_concatenado == 6311){
+	  
+	      return "Se ha empaquetado a Doble vive " +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";
+				  
+	  }else if(array_concatenado == 2361){
+	  
+	      return "Se ha empaquetado a Doble vive " +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";				  
+				  
+				  
+				  
+				  
+				  
+				  
+	  }else if(array_concatenado ==3171||array_concatenado ==7311){
+	  
+	      return "Se ha empaquetado a Doble vive más" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";				  
+
+
+	  }else if(array_concatenado ==2371||array_concatenado ==6371){
+	  
+	      return "Se ha empaquetado a Doble vive más" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";	
+
+
+
+
+
+				 
+				  
+	  }else if(array_concatenado ==4181||array_concatenado ==8411){
+	  
+	      return "Se ha empaquetado a Doble vive pro" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";				 
+				
+
+	  }else if(array_concatenado ==2481||array_concatenado ==3481||array_concatenado ==6481||array_concatenado ==7481){
+	  
+	      return "Se ha empaquetado a Doble vive pro" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";				 
+				
+
+
+
+
+
+
+
+	  }else if(array_concatenado ==3115||array_concatenado ==5311){
+	  
+	      return "Se ha empaquetado a Tv+fono" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";
+	  
+	  
+	  }else if(array_concatenado ==2315){
+	  
+	      return "Se ha empaquetado a Tv+fono" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";	  
+	  
+	  
+	  
+	  
+	  
+	  }else if(array_concatenado ==2415||array_concatenado ==3415){
+	  
+	      return "Se ha empaquetado a Tvfull+fono" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";
+
+
+	  }else if(array_concatenado ==4115||array_concatenado ==5411){
+	  
+	      return "Se ha empaquetado a Tvfull+fono" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";
+
+
+
+
+
+
+
+
+
+	  }else if(array_concatenado ==6115||array_concatenado ==5611){
+	  
+	      return "Se ha empaquetado a Mega 200+fono" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total)+"</strong>";
+
+
+
+
+
+	  }else if(array_concatenado ==5171||array_concatenado ==7115){
+	  
+	      return "Se ha empaquetado a Mega 500+fono" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";
+
+	  }else if(array_concatenado ==6175){
+	  
+	      return "Se ha empaquetado a Mega 500+fono" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";
+
+
+
+
+
+
+	  }else if(array_concatenado ==5181||array_concatenado ==8115){
+	  
+	      return "Se ha empaquetado a Mega 600+fono" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";
+				  
+	  }else if(array_concatenado ==6185||array_concatenado ==7185){
+	  
+	      return "Se ha empaquetado a Mega 600+fono" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";				  
+				  
+				  
+
+
+	  }else if(array_concatenado ==3165||array_concatenado ==6315||array_concatenado ==5315||array_concatenado ==5361){
+	  
+	      return "Se ha empaquetado a Triple vive" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";
+				  
+	  }else if(array_concatenado ==2365){
+	  
+	      return "Se ha empaquetado a Triple vive" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";				  
+				
+
+
+				
+
+
+	  }else if(array_concatenado ==3175||array_concatenado ==7315||array_concatenado ==5371){
+	  
+	      return "Se ha empaquetado a Triple vive más" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";
+				  
+				  
+	  }else if(array_concatenado ==2375||array_concatenado ==6375){
+	  
+	      return "Se ha empaquetado a Triple vive más" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";				  
+				  
+				  
+				  
+				  
+
+
+	  }else if(array_concatenado ==8415||array_concatenado ==4185||array_concatenado ==5481){
+	  
+	      return "Se ha empaquetado a Triple vive pro" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";
+
+
+	  }else if(array_concatenado ==2485||array_concatenado ==3485||array_concatenado ==6485||array_concatenado ==7485){
+	  
+	      return "Se ha empaquetado a Triple vive pro" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>";
+
+
+
+
+	  
+	  }else{
+
+
+	      return "Empaquetamiento sin descuento de renta normal" +"<br/>"+
+				 "El numero de dias proporcionales será: "+ numero_propor+"<br/><br/><br/><br/>"+
+				 
+				 "Detalle boleta"+"<br/>"+
+				 "Valor actual:-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_actual_int+"<br/><br/>"+
+				  nombre_tv+":-------------------------------------&nbsp;&nbsp;&nbsp;"+precio_tv+"<br/>"+
+				  nombre_inet+":--------------------------------&nbsp;&nbsp&nbsp;"+precio_inet+"<br/>"+
+				  nombre_fono+":---------------------------------&nbsp;&nbsp;&nbsp;"+precio_fono+"<br/>"+
+				  "Valor proporcionales"+"---------------------&nbsp;&nbsp;"+Math.round(valor_proporcionales_total)+"<br/><br/>"+
+				  
+				  "Desc. renta normal:---------------------&nbsp&nbsp;&nbsp;-"+desc_renta_normal+"<br/>"+
+				  "Desc. bala de plata:---------------------&nbsp;&nbsp;&nbsp;-"+desc_bala_de_plata+"<br/>"+
+				  "Desc. por servicio pagado vigente:---&nbsp;&nbsp;-"+Math.round((resta_servicio_pagado/30)*numero_propor)+"<br/><br/>"+
+				  
+				  "<b>Total upgrade: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_upgrade)+"</strong>"+
+				   "<b>Total sin upgrade: ------------------------------------</b>&nbsp;&nbsp;&nbsp<strong>"+Math.round(costo_total_sin_upgrade)+"</strong>";
+
+
+
+
+	 
+	  
+	  }
+    
+
+}
+
+
+
+
+
+
+
+
+//boton de resultados, activa las funciones del script
+
+function boton() {
+
+  //planes
+  
+  
+  var plan_actual_valor_id = document.getElementById("Plan_actual");
+  var plan_actual_valor = plan_actual_valor_id.options[plan_actual_valor_id.selectedIndex].value;
+
+  var plan_tv_valor_id = document.getElementById("Nuevos_productos_tv");
+  var plan_tv_valor = plan_tv_valor_id.options[plan_tv_valor_id.selectedIndex].value;
+
+  var plan_inet_valor_id = document.getElementById("Nuevos_productos_internet");
+  var plan_inet_valor = plan_inet_valor_id.options[plan_inet_valor_id.selectedIndex].value; 
+
+
+  var plan_fono_valor_id = document.getElementById("Nuevos_productos_fono");
+  var plan_fono_valor = plan_fono_valor_id.options[plan_fono_valor_id.selectedIndex].value; 
+
+
+  //vigentes
+
+  var vig = dias.filter(servicios_vigentes)
+  var vig_len = dias.filter(servicios_vigentes).length;
+
+
+ //nuevos
+
+  var nuev = dias.filter(servicios_nuevos);
+  var nuev_len = dias.filter(servicios_nuevos).length;
+  
+ //match
+  
+   var match_ = getMatch(vig,nuev);
+   var match_len =match_.length;
+ 
+//dias proporcionales
+
+   var dias_proporcionales = dias_prop(match_len,vig_len,nuev_len);
+
+// array descuento concatenado
+
+    array_concatenado = crea_array();
+	
+// numeral de codigo
+
+    num_codigo = numeral_array_codigo(array_concatenado);
+	
+// descuentos renta normal
+
+    desc_renta_normal = aplica_desc(num_codigo);	
+
+//letra extraida
+    
+    letra_extraida_actual = dict(plan_actual_valor);
+	letra_extraida_tv = dict(plan_tv_valor);
+    letra_extraida_inet = dict(plan_inet_valor);
+	letra_extraida_fono = dict(plan_fono_valor);
+	
+	
+//precios extraidos desc
+
+   vigentes_precios_extraidos = extrae_precios(letra_extraida_actual);
+   tv_precios_extraidos = extrae_precios(letra_extraida_tv);
+   inet_precios_extraidos = extrae_precios(letra_extraida_inet);
+   fono_precios_extraidos = extrae_precios(letra_extraida_fono);
+   
+   
+//nombre extraidos   
+   
+   vigentes_nombre_extraidos = extrae_Nombres_prod(letra_extraida_actual);
+   tv_nombre_extraidos = extrae_Nombres_prod(letra_extraida_tv);
+   inet_nombre_extraidos = extrae_Nombres_prod(letra_extraida_inet);
+   fono_nombre_extraidos = extrae_Nombres_prod(letra_extraida_fono);   
+   
+   
+   
+   
+   
+//calculo de los planes
+
+   calculo_planes = planes(dias_proporcionales,array_concatenado,desc_renta_normal,
+                           tv_nombre_extraidos,inet_nombre_extraidos,fono_nombre_extraidos,
+						   tv_precios_extraidos,inet_precios_extraidos,fono_precios_extraidos,
+						   vigentes_precios_extraidos);
+   
+
+   
+	
+//enviar resultados al html
+
+//  document.getElementById("vig").innerHTML = vig;
+//  document.getElementById("vig_len").innerHTML = vig_len;
+  
+//  document.getElementById("nuev").innerHTML = nuev;
+//  document.getElementById("nuev_len").innerHTML = nuev_len;
+  
+//  document.getElementById("match").innerHTML = match_;
+//  document.getElementById("match_len").innerHTML = match_len;
+  
+  
+//  document.getElementById("dias_prop").innerHTML = dias_proporcionales;
+
+//  document.getElementById("plan_").innerHTML = planes(dias_proporcionales);																							  
+																									  
+//  document.getElementById("array_descuento").innerHTML = array_concatenado;	
+
+//  document.getElementById("numeral_codigo").innerHTML = numeral_array_codigo(array_concatenado);
+
+//  document.getElementById("desc_de_renta_normal").innerHTML = desc_renta_normal;
+  
+//  document.getElementById("letra_vig").innerHTML =  letra_extraida_actual;
+  
+//  document.getElementById("letra_tv").innerHTML =  letra_extraida_tv;
+   
+//  document.getElementById("letra_inet").innerHTML =  letra_extraida_inet;
+  
+//  document.getElementById("letra_fono").innerHTML =  letra_extraida_fono;
+  
+  
+  
+//  document.getElementById("precio_actual").innerHTML =  vigentes_precios_extraidos;
+  
+//  document.getElementById("precio_tv").innerHTML =   tv_precios_extraidos;
+  
+//  document.getElementById("precio_inet").innerHTML =  inet_precios_extraidos;
+  
+//  document.getElementById("precio_fono").innerHTML =  fono_precios_extraidos;
+  
+  
+  
+//  document.getElementById("nombre_vigente").innerHTML =   vigentes_nombre_extraidos;
+  
+//  document.getElementById("nombre_tv").innerHTML =   tv_nombre_extraidos;
+  
+//  document.getElementById("nombre_inet").innerHTML =  inet_nombre_extraidos;
+  
+//  document.getElementById("nombre_fono").innerHTML =  fono_nombre_extraidos;
+  
+  
+  
+  
+  
+  document.getElementById("plan_").innerHTML =   calculo_planes;
+  
+}
+
+
+
+</script>
+
+</body>
+</html>
